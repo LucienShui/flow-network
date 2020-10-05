@@ -26,7 +26,7 @@ namespace flow_network {
             int cnt, *head;
             std::vector<Edge> edge;
 
-            explicit Graph(int n): cnt(0), head(new int[n]) {
+            explicit Graph(int n) : cnt(0), head(new int[n]) {
                 memset(head, 0xff, sizeof(int) * n);
             }
 
@@ -60,7 +60,7 @@ namespace flow_network {
             int cnt, *head;
             std::vector<Edge> edge;
 
-            explicit Graph(int n): cnt(0), head(new int[n]) {
+            explicit Graph(int n) : cnt(0), head(new int[n]) {
                 memset(head, 0xff, sizeof(int) * n);
             }
 
@@ -76,18 +76,34 @@ namespace flow_network {
     /**
      * 网络流
      */
-    class FlowNetwork {
+    struct FlowNetwork {
 
         int *dist, *cur, n;
         flow_network::Graph graph;
 
         explicit FlowNetwork(int n);
+
+        bool bfs(int S, int T);
+
+        int dfs(int u, int T, int low = INF);
+
+        int run(int S, int T);
     };
 
     /**
      * 费用流
      */
-    class MinimumCostFlow;
+    struct MinimumCostFlow {
+
+        int *dist, *pre, *low, *vis, clk, n;
+        minimum_cost_flow::Graph graph;
+
+        explicit MinimumCostFlow(int n);
+
+        bool bfs(int S, int T);
+
+        std::pair<int, int> run(int S, int T);
+    };
 }
 
 #endif //NETWORK_FLOWS_FLOW_NETWORK_H
