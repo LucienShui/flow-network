@@ -22,6 +22,9 @@ class FlowNetworkTestCase(unittest.TestCase):
 
         self.assertEqual(1, flow_network.run(0, 4))
 
+        self.assertEqual(0, flow_network.edges[0][2])
+        self.assertEqual(1, flow_network.edges[1][2])
+
     def test_minimum_cost_flow(self):
         minimum_cost_flow = MinimumCostFlow(5)
 
@@ -40,6 +43,15 @@ class FlowNetworkTestCase(unittest.TestCase):
         flow, cost = minimum_cost_flow.run(0, 4)
         self.assertEqual(1, flow)
         self.assertEqual(4, cost)
+
+        self.assertEqual(0, minimum_cost_flow.edges[0][2])
+        self.assertEqual(1, minimum_cost_flow.edges[1][2])
+
+    def test_tuple_modifier(self):
+        from flow_network.util import tuple_modifier
+        buf = (1, 2, 3)
+        result = tuple_modifier(buf, 1, 4)
+        self.assertEqual((1, 4, 3), result)
 
 
 if __name__ == '__main__':

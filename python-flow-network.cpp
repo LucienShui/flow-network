@@ -27,12 +27,17 @@ void flow_network_add_edge(void *raw_flow_network, int u, int v, int flow) {
     flow_network->graph.add_edge(u, v, flow);
 }
 
-void flow_network_run(void *raw_flow_network, int S, int T, int *result) {
+void flow_network_run(void *raw_flow_network, int S, int T, int *result, int *edge_flows) {
     auto *flow_network = reinterpret_cast<flow_network::FlowNetwork *>(raw_flow_network);
 #ifdef DEBUG
     printf("get ptr = %p, S = %d, T = %d\n", flow_network, S, T);
 #endif
     result[0] = flow_network->run(S, T);
+
+    int edge_number = flow_network->graph.edge.size();
+    for (int i = 0; i < edge_number; i++) {
+        edge_flows[i] = flow_network->graph.edge[i].flow;
+    }
 }
 
 void *minimum_cost_flow_new(int n) {
@@ -51,7 +56,7 @@ void minimum_cost_flow_add_edge(void *raw_minimum_cost_flow, int u, int v, int f
     minimum_cost_flow->graph.add_edge(u, v, flow, cost);
 }
 
-void minimum_cost_flow_run(void *raw_minimum_cost_flow, int S, int T, int *result) {
+void minimum_cost_flow_run(void *raw_minimum_cost_flow, int S, int T, int *result, int *edge_flows) {
     auto minimum_cost_flow = reinterpret_cast<flow_network::MinimumCostFlow *>(raw_minimum_cost_flow);
 #ifdef DEBUG
     printf("get ptr = %p, S = %d, T = %d\n", minimum_cost_flow, S, T);
@@ -59,6 +64,11 @@ void minimum_cost_flow_run(void *raw_minimum_cost_flow, int S, int T, int *resul
     std::pair<int, int> answer = minimum_cost_flow->run(S, T);
     result[0] = answer.first;
     result[1] = answer.second;
+
+    int edge_number = minimum_cost_flow->graph.edge.size();
+    for (int i = 0; i < edge_number; i++) {
+        edge_flows[i] = minimum_cost_flow->graph.edge[i].flow;
+    }
 }
 
 }
