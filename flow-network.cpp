@@ -32,7 +32,7 @@ namespace flow_network {
         for (int &i = cur[u]; ~i; i = graph.edge[i].next) {
             int v = graph.edge[i].v, flow = graph.edge[i].flow;
             if (dist[v] == dist[u] + 1 && flow > 0) {
-                int min = dfs(v, flow < low ? flow : low, T);
+                int min = dfs(v, T, flow < low ? flow : low);
                 if (min > 0) {
                     graph.edge[i].flow -= min;
                     graph.edge[i ^ 1].flow += min;
