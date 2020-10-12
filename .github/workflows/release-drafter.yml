@@ -1,0 +1,19 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  draft_release:
+    if: github.repository == 'LucienShui/flow-network'
+    name: Draft release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        name: Release Drafter
+        with:
+          config-name: release-drafter.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
