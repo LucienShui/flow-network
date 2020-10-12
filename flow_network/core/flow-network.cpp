@@ -5,7 +5,7 @@
 
 namespace flow_network {
 
-    FlowNetwork::FlowNetwork(int n) : graph(n), n(n), dist(new int[n]), cur(new int[n]) {}
+    FlowNetwork::FlowNetwork(int n) : dist(new int[n]), cur(new int[n]), n(n), graph(n) {}
 
     bool FlowNetwork::bfs(int S, int T) {
         memset(dist, 0xff, sizeof(int) * n);
@@ -52,8 +52,8 @@ namespace flow_network {
         return ans;
     }
 
-    MinimumCostFlow::MinimumCostFlow(int n) : graph(n), n(n), dist(new int[n]), pre(new int[n]), low(new int[n]),
-                                              vis(new int[n]), clk(0) {}
+    MinimumCostFlow::MinimumCostFlow(int n) : dist(new int[n]), pre(new int[n]), low(new int[n]),
+                                              vis(new int[n]), clk(0), n(n), graph(n) {}
 
     bool MinimumCostFlow::bfs(int S, int T) {
         vis[S] = ++clk, low[S] = INF, memset(dist, 0x3f, sizeof(int) * n), dist[S] = 0;

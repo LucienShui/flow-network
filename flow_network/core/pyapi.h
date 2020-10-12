@@ -2,18 +2,24 @@
 // Created by 水清源 on 2020/10/5.
 //
 
-#ifndef NETWORK_FLOWS_PYTHON_FLOW_NETWORK_H
-#define NETWORK_FLOWS_PYTHON_FLOW_NETWORK_H
+#ifndef NETWORK_FLOWS_PYAPI_H
+#define NETWORK_FLOWS_PYAPI_H
 
 #include "flow-network.h"
 
 extern "C" {
 
 /**
- * 删除指针指向的对象
+ * 删除朴素网络流对象
  * @param ptr 对象指针
  */
-void delete_ptr(void *ptr);
+void delete_flow_network_ptr(void *ptr);
+
+/**
+ * 删除费用流对象
+ * @param ptr 对象指针
+ */
+void delete_minimum_cost_flow_ptr(void *ptr);
 
 /**
  * 创建朴素网络流对象
@@ -70,4 +76,4 @@ void minimum_cost_flow_run(void *raw_minimum_cost_flow, int S, int T, int *resul
 
 }
 
-#endif //NETWORK_FLOWS_PYTHON_FLOW_NETWORK_H
+#endif //NETWORK_FLOWS_PYAPI_H

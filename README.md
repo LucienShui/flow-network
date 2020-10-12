@@ -4,15 +4,6 @@
 
 使用 `Dinic` 和朴素费用流，算法来自 [DuckKnowNothing - 网络流](https://github.com/UPCACM/DuckKnowNothing/tree/master/src/GraphAlgorithm/%E7%BD%91%E7%BB%9C%E6%B5%81) 
 
-## Guidance
-
-```bash
-clone https://github.com/LucienShui/flow-network
-cd flow-network
-make
-python3 tests.py
-```
-
 ## Reference
 
 + [How to use C++ classes with ctypes?](https://stackoverflow.com/questions/1615813/how-to-use-c-classes-with-ctypes)
