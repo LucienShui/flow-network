@@ -1,5 +1,6 @@
 #include "flow-network.h"
 
+#include <cstring>
 #include <map>
 #include <queue>
 
