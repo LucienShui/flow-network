@@ -10,7 +10,13 @@ on:
 jobs:
   deploy:
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+
+    name: Build with ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v2
@@ -29,3 +35,14 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
+
+  linux-build:
+    name: Build with ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build and upload manylinux wheels
+      uses: Niraj-Kamdar/manylinux-wheel-builder@master
+      env:
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
