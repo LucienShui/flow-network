@@ -27,7 +27,7 @@ for command in commands:
 
 setup(
     name='flow-network',
-    version='0.0.1',
+    version='0.0.2',
     author='Lucien Shui',
     author_email='lucien@lucien.ink',
     url='https://github.com/LucienShui/flow-network',
