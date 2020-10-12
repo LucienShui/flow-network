@@ -41,8 +41,8 @@ jobs:
     name: Build with ubuntu-latest
     runs-on: ubuntu-latest
     env:
-      TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
-      TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+      TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: build and upload manylinux wheels
