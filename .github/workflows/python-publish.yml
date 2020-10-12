@@ -34,15 +34,16 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
+        rm dist/*.tar.gz
         twine upload dist/*
 
   linux-build:
     name: Build with ubuntu-latest
     runs-on: ubuntu-latest
+    env:
+      TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+      TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
     steps:
-    - uses: actions/checkout@v2
-    - name: build and upload manylinux wheels
-      uses: Niraj-Kamdar/manylinux-wheel-builder@master
-      env:
-        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      - uses: actions/checkout@v2
+      - name: build and upload manylinux wheels
+        uses: Niraj-Kamdar/manylinux-wheel-builder@master
