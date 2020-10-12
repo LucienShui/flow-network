@@ -49,7 +49,7 @@ custom_extension = CustomExtension(name='_core',
 
 setup(
     name='flow-network',
-    version='0.0.3',
+    version='0.1.0',
     author='Lucien Shui',
     author_email='lucien@lucien.ink',
     url='https://github.com/LucienShui/flow-network',
