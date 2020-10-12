@@ -26,18 +26,20 @@ class CustomExtension(Extension):
 
 class CustomBuild(build_ext):
     def build_extension(self, ext: CustomExtension):
-        ext.sources = [path.join(ext.base_dir, each) for each in ext.sources]
+        if isinstance(ext, CustomExtension):
+            ext.sources = [path.join(ext.base_dir, each) for each in ext.sources]
 
         super().build_extension(ext)
 
-        raw_output = self.get_ext_fullpath(ext.name)
+        if isinstance(ext, CustomExtension):
+            raw_output = self.get_ext_fullpath(ext.name)
 
-        filename = path.basename(raw_output)
-        pathname = path.dirname(raw_output)
+            filename = path.basename(raw_output)
+            pathname = path.dirname(raw_output)
 
-        output = path.join(pathname, ext.base_dir, filename)
+            output = path.join(pathname, ext.base_dir, filename)
 
-        move(raw_output, output)
+            move(raw_output, output)
 
 
 custom_extension = CustomExtension(name='_core',
