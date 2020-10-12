@@ -13,7 +13,7 @@
 pip install flow-network
 ```
 
-[样例代码](tests.py)
+[样例代码](https://github.com/LucienShui/flow-network/blob/main/tests.py)
 
 ## Reference
 
