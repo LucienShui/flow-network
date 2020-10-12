@@ -1,6 +1,7 @@
 #ifndef NETWORK_FLOWS_FLOW_NETWORK_H
 #define NETWORK_FLOWS_FLOW_NETWORK_H
 
+#include <cstring>
 #include <vector>
 
 namespace flow_network {
