@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
-project(network_flows)
+project(flow_network)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(network_flows flow_network/core/flow-network.cpp flow_network/core/flow-network.h flow_network/core/pyapi.h flow_network/core/pyapi.cpp)
+add_library(network_flows SHARED flow_network/core/flow-network.cpp flow_network/core/flow-network.h flow_network/core/py-api.h flow_network/core/py-api.cpp)
