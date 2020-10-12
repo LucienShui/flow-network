@@ -2,6 +2,9 @@
 
 网络流的工业级应用
 
+![Release Drafter](https://github.com/LucienShui/flow-network/workflows/Release%20Drafter/badge.svg)
+![Upload Python Package](https://github.com/LucienShui/flow-network/workflows/Upload%20Python%20Package/badge.svg)
+
 使用 `Dinic` 和朴素费用流，算法来自 [DuckKnowNothing - 网络流](https://github.com/UPCACM/DuckKnowNothing/tree/master/src/GraphAlgorithm/%E7%BD%91%E7%BB%9C%E6%B5%81) 
 
 ## 使用指南
