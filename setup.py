@@ -5,6 +5,10 @@ from setuptools.command.build_ext import build_ext
 from os import path
 from shutil import move
 
+from .flow_network.__version__ import __title__, __description__, __url__
+from .flow_network.__version__ import __version__, __author__
+from .flow_network.__version__ import __author_email__
+
 
 def readme(filename: str = 'README.md') -> str:
     """
@@ -48,12 +52,12 @@ custom_extension = CustomExtension(name='_core',
                                    extra_compile_args=['-std=c++14', '-W', '-fPIC'])
 
 setup(
-    name='flow-network',
-    version='0.1.0',
-    author='Lucien Shui',
-    author_email='lucien@lucien.ink',
-    url='https://github.com/LucienShui/flow-network',
-    description='Flow Network C++ Implementation',
+    name=__title__,
+    version=__version__,
+    author=__author__,
+    author_email=__author_email__,
+    url=__url__,
+    description=__description__,
     packages=find_packages(),
     ext_modules=[custom_extension],
     cmdclass={'build_ext': CustomBuild},
