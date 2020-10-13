@@ -29,12 +29,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
     - name: Build and publish
+      shell: bash
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
-        rm dist/*.tar.gz
+        find dist -name "*.tar.gz" | xargs rm -rf
         twine upload dist/*
 
   linux-build:
