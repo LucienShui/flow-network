@@ -5,9 +5,9 @@ from setuptools.command.build_ext import build_ext
 from os import path
 from shutil import move
 
-from .flow_network.__version__ import __title__, __description__, __url__
-from .flow_network.__version__ import __version__, __author__
-from .flow_network.__version__ import __author_email__
+from flow_network.__version__ import __title__, __description__, __url__
+from flow_network.__version__ import __version__, __author__
+from flow_network.__version__ import __author_email__
 
 
 def readme(filename: str = 'README.md') -> str:
@@ -49,7 +49,7 @@ class CustomBuild(build_ext):
 custom_extension = CustomExtension(name='_core',
                                    sources=['flow-network.cpp', 'py-api.cpp'],
                                    base_dir='flow_network/core',
-                                   extra_compile_args=['-std=c++14', '-W', '-fPIC'])
+                                   extra_compile_args=['-std=c++11'])
 
 setup(
     name=__title__,
