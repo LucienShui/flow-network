@@ -53,16 +53,21 @@ namespace flow_network {
         return ans;
     }
 
-    MinimumCostFlow::MinimumCostFlow(int n) : dist(new int[n]), pre(new int[n]), low(new int[n]),
-                                              vis(new int[n]), clk(0), n(n), graph(n) {}
+    MinimumCostFlow::MinimumCostFlow(int n, int m) : dist(new int[n]), pre(new int[n]), low(new int[n]),
+                                                     vis(new int[n]), que(new int[n]), clk(0), n(n), m(m),
+                                                     size_of_array(sizeof(int) * n), graph(n, m) {}
 
     bool MinimumCostFlow::bfs(int S, int T) {
-        vis[S] = ++clk, low[S] = INF, memset(dist, 0x3f, sizeof(int) * n), dist[S] = 0;
-        std::queue<int> que;
-        que.push(S);
-        while (!que.empty()) {
-            int u = que.front();
-            que.pop();
+        vis[S] = ++clk, low[S] = INF, memset(dist, 0x3f, size_of_array), dist[S] = 0;
+        int head = 0, tail = 0;
+        que[tail++] = S;
+        while (head != tail) {
+            int u = que[head++];
+
+            if (head >= n) {
+                head -= n;
+            }
+
             vis[u] = -1;
             for (int i = graph.head[u]; ~i; i = graph.edge[i].next) {
                 int v = graph.edge[i].v, flow = graph.edge[i].flow, cost = graph.edge[i].cost;
@@ -71,7 +76,12 @@ namespace flow_network {
                     pre[v] = i;
                     low[v] = std::min(low[u], flow);
                     if (vis[v] != clk) {
-                        que.push(v);
+                        que[tail++] = v;
+
+                        if (tail >= n) {
+                            tail -= n;
+                        }
+
                         vis[v] = clk;
                     }
                 }

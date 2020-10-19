@@ -48,9 +48,6 @@ namespace flow_network {
          */
         struct Edge {
             int next, u, v, flow, cost;
-
-            explicit Edge(int next, int u, int v, int flow, int cost) : next(next), u(u), v(v), flow(flow),
-                                                                        cost(cost) {}
         };
 
         /**
@@ -58,17 +55,17 @@ namespace flow_network {
          */
         struct Graph {
 
-            int cnt, *head;
-            std::vector<Edge> edge;
+            int cnt, n, m, *head;
+            Edge *edge;
 
-            explicit Graph(int n) : cnt(0), head(new int[n]) {
+            explicit Graph(int n, int m) : cnt(0), n(n), m(m), head(new int[n]), edge(new Edge[m]) {
                 memset(head, 0xff, sizeof(int) * n);
             }
 
             void add_edge(int u, int v, int flow, int cost) {
-                edge.emplace_back(head[u], u, v, flow, cost);
+                edge[cnt] = {head[u], u, v, flow, cost};
                 head[u] = cnt++;
-                edge.emplace_back(head[v], v, u, 0, -cost);
+                edge[cnt] = {head[v], v, u, 0, -cost};
                 head[v] = cnt++;
             }
         };
@@ -96,10 +93,10 @@ namespace flow_network {
      */
     struct MinimumCostFlow {
 
-        int *dist, *pre, *low, *vis, clk, n;
+        int *dist, *pre, *low, *vis, *que, clk, n, m, size_of_array;
         minimum_cost_flow::Graph graph;
 
-        explicit MinimumCostFlow(int n);
+        explicit MinimumCostFlow(int n, int m);
 
         bool bfs(int S, int T);
 

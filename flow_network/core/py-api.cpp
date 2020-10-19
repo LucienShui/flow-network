@@ -52,10 +52,10 @@ void flow_network_run(void *raw_flow_network, int S, int T, int *result, int *ed
     }
 }
 
-void *minimum_cost_flow_new(int n) {
-    auto *flow_network_ptr = new flow_network::MinimumCostFlow(n);
+void *minimum_cost_flow_new(int n, int m) {
+    auto *flow_network_ptr = new flow_network::MinimumCostFlow(n, m);
 #ifndef NDEBUG
-    printf("create ptr = %p, n = %d\n", flow_network_ptr, n);
+    printf("create ptr = %p, n = %d, m = %d\n", flow_network_ptr, n, m);
 #endif
     return flow_network_ptr;
 }
@@ -77,7 +77,7 @@ void minimum_cost_flow_run(void *raw_minimum_cost_flow, int S, int T, int *resul
     result[0] = answer.first;
     result[1] = answer.second;
 
-    int edge_number = minimum_cost_flow->graph.edge.size();
+    int edge_number = minimum_cost_flow->graph.m;
     for (int i = 0; i < edge_number; i++) {
         edge_flows[i] = minimum_cost_flow->graph.edge[i].flow;
     }
