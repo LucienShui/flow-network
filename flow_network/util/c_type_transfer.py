@@ -30,4 +30,4 @@ def c_type_transfer(data: [int, float, list]) -> [ctypes.c_int, ctypes.c_double]
 
             return result
 
-    raise RuntimeError('Unsupported type')
+    raise RuntimeError(f'Unsupported type {data_type}')
