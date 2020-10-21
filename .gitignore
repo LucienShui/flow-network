@@ -164,3 +164,6 @@ dmypy.json
 
 # macOS
 .DS_Store
+
+# .outputs
+graph.txt

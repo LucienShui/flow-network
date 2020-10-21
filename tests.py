@@ -44,6 +44,7 @@ class FlowNetworkTestCase(unittest.TestCase):
             minimum_cost_flow.add_edge(u, v, flow, cost)
 
         minimum_cost_flow.summary()
+        minimum_cost_flow.extract_graph('graph.txt')
 
         flow, cost = minimum_cost_flow.run(0, 4)
 

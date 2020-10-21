@@ -1,8 +1,8 @@
 __title__ = 'flow-network'
 __description__ = 'Flow Network C++ Implementation'
 __url__ = 'https://github.com/LucienShui/flow-network'
-__version__ = '0.1.4'
-__build__ = 0x000104
+__version__ = '0.1.5'
+__build__ = eval('0x{}'.format(''.join([f'{int(each):02d}' for each in __version__.split('.')])))
 __author__ = 'Lucien Shui'
 __author_email__ = 'lucien@lucien.ink'
 __license__ = 'Apache 2.0'

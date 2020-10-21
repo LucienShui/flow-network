@@ -57,3 +57,19 @@ class NetWork(Clib):
 Number of vertices: {vertex_cnt}
 Number of edges: {edge_cnt}
 {"=" * line_length}''')
+
+    def extract_graph(self, filepath) -> None:
+        edge_cnt: int = len(self.edges)
+
+        content = f'{self._n} {edge_cnt >> 1}\n'
+
+        end_line: str = '\n'
+
+        for i in range(0, edge_cnt, 2):
+            each = self.edges[i]
+            length = len(each)
+            for j in range(length):
+                content += f'{each[j]}{end_line if j == length - 1 else " "}'
+
+        with open(filepath, 'w') as file:
+            file.write(content)
