@@ -1,25 +1,15 @@
 from __future__ import absolute_import, print_function
-from .util import c_type_transfer, tuple_modifier, index_validator
-from .core import Clib
+from flow_network.util import c_type_transfer, tuple_modifier, index_validator
+from .network import NetWork
 import ctypes
 import typing
 
 
-class MinimumCostFlow(Clib):
+class MinimumCostFlow(NetWork):
+
     def __init__(self, n: int):
-        super().__init__()
-
-        c_n: ctypes.c_int = c_type_transfer(n)
-
-        self.__n = n
-
-        self.__obj = self._clib.minimum_cost_flow_new.restype = ctypes.POINTER(ctypes.c_void_p)
-        self.__obj = self._clib.minimum_cost_flow_new(c_n)
-
+        super().__init__(n, 'minimum_cost_flow')
         self.edges: typing.List[typing.Tuple[int, int, int, int]] = []
-
-    def __del__(self):
-        self._clib.delete_minimum_cost_flow_ptr(self.__obj)
 
     def add_edge(self, u: int, v: int, flow: int, cost: int) -> None:
         """
@@ -30,7 +20,7 @@ class MinimumCostFlow(Clib):
         :param cost: cost for cutting an edge
         :return: None
         """
-        index_validator(u, v, self.__n)
+        index_validator(u, v, self._n)
 
         self.edges.append((u, v, flow, cost))
         self.edges.append((v, u, 0, -cost))
@@ -39,7 +29,7 @@ class MinimumCostFlow(Clib):
         c_v: ctypes.c_int = c_type_transfer(v)
         c_flow: ctypes.c_int = c_type_transfer(flow)
         c_cost: ctypes.c_int = c_type_transfer(cost)
-        self._clib.minimum_cost_flow_add_edge(self.__obj, c_u, c_v, c_flow, c_cost)
+        self._clib.minimum_cost_flow_add_edge(self._obj, c_u, c_v, c_flow, c_cost)
 
     def run(self, s: int, t: int) -> (int, int):
         """
@@ -48,16 +38,7 @@ class MinimumCostFlow(Clib):
         :param t: target point's index
         :return: flow, cost
         """
-        c_s: ctypes.c_int = c_type_transfer(s)
-        c_t: ctypes.c_int = c_type_transfer(t)
         c_result = (ctypes.c_int * 2)()
-
-        c_edge_flows = (ctypes.c_int * len(self.edges))()
-
-        self._clib.minimum_cost_flow_run(self.__obj, c_s, c_t, c_result, c_edge_flows)
+        self._run(s, t, c_result)
         flow, cost = int(c_result[0]), int(c_result[1])
-
-        for idx, each in enumerate(c_edge_flows):
-            self.edges[idx] = tuple_modifier(self.edges[idx], 2, int(each))
-
         return flow, cost
