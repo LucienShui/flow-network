@@ -46,3 +46,14 @@ class NetWork(Clib):
 
         for idx, each in enumerate(c_edge_flows):
             self.edges[idx] = tuple_modifier(self.edges[idx], 2, int(each))
+
+    def summary(self, line_length: int = 32, print_fn=print):
+        vertex_cnt: int = self._n
+        edge_cnt: int = len(self.edges)
+
+        print_fn(f'''{"=" * line_length}
+{' '.join([each.capitalize() for each in self._algorithm_name.split('_')])}
+{"-" * line_length}
+Number of vertices: {vertex_cnt}
+Number of edges: {edge_cnt}
+{"=" * line_length}''')
