@@ -21,6 +21,8 @@ class FlowNetworkTestCase(unittest.TestCase):
         for u, v, flow in edges:
             flow_network.add_edge(u, v, flow)
 
+        flow_network.summary()
+
         self.assertEqual(1, flow_network.run(0, 4))
 
         self.assertEqual(0, flow_network.edges[0][2])
@@ -40,6 +42,8 @@ class FlowNetworkTestCase(unittest.TestCase):
 
         for u, v, flow, cost in edges:
             minimum_cost_flow.add_edge(u, v, flow, cost)
+
+        minimum_cost_flow.summary()
 
         flow, cost = minimum_cost_flow.run(0, 4)
 
