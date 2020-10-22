@@ -165,5 +165,10 @@ dmypy.json
 # macOS
 .DS_Store
 
-# .outputs
+# SWIG
+flow_network/core/core_wrap.cxx
+flow_network/core/core.py
+
+# test
 graph.txt
+main.cpp

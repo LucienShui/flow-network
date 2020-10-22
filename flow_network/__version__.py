@@ -1,8 +1,9 @@
 __title__ = 'flow-network'
 __description__ = 'Flow Network C++ Implementation'
 __url__ = 'https://github.com/LucienShui/flow-network'
-__version__ = '0.1.5'
-__build__ = eval('0x{}'.format(''.join([f'{int(each):02d}' for each in __version__.split('.')])))
+__version_info__ = (0, 1, 6)
+__version__ = '.'.join(map(str, __version_info__))
+__build__ = eval(f"0x{''.join(map(lambda x: f'{int(x):02d}', __version_info__))}")
 __author__ = 'Lucien Shui'
 __author_email__ = 'lucien@lucien.ink'
 __license__ = 'Apache 2.0'
