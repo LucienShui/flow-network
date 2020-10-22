@@ -8,7 +8,7 @@ on:
     types: [published]
 
 jobs:
-  deploy:
+  macos-build:
 
     strategy:
       matrix:
@@ -20,23 +20,53 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+    - name: Set up Conda
+      uses: s-weigand/setup-conda@v1
     - name: Install dependencies
       run: |
+        conda install swig -y
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+        python -m pip install setuptools wheel twine
     - name: Build and publish
       shell: bash
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        swig -c++ -python flow_network/core/core.i
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+
+  windows-build:
+
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    name: Build with ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Conda
+      uses: s-weigand/setup-conda@v1
+    - name: Install dependencies
+      run: |
+        conda install swig -y
+        python -m pip install --upgrade pip
+        python -m pip install setuptools wheel twine
+    - name: Build and publish
+      shell: bash
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        swig -c++ -python flow_network/core/core.i
         python setup.py sdist bdist_wheel
         find dist -name "*.tar.gz" | xargs rm -rf
         twine upload dist/*
+
 
   linux-build:
     name: Build with ubuntu-latest
@@ -46,5 +76,11 @@ jobs:
       TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Conda
+        uses: s-weigand/setup-conda@v1
+      - name: SWIG generation
+        run: |
+          conda install swig -y
+          swig -c++ -python flow_network/core/core.i
       - name: build and upload manylinux wheels
         uses: Niraj-Kamdar/manylinux-wheel-builder@master
