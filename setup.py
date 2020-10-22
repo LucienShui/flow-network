@@ -1,8 +1,9 @@
 from __future__ import absolute_import, print_function
 
+import os
+
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
-from os import path
 from shutil import move
 
 from flow_network.__version__ import __title__, __description__, __url__
@@ -16,9 +17,9 @@ def readme(filename: str = 'README.md') -> str:
     :return: contents of README.md
     """
 
-    this_directory = path.abspath(path.dirname(__file__))
+    this_directory = os.path.abspath(os.path.dirname(__file__))
 
-    with open(path.join(this_directory, filename), encoding='utf-8') as file:
+    with open(os.path.join(this_directory, filename), encoding='utf-8') as file:
         return file.read()
 
 
@@ -31,36 +32,38 @@ class CustomExtension(Extension):
 class CustomBuild(build_ext):
     def build_extension(self, ext: CustomExtension):
         if isinstance(ext, CustomExtension):
-            ext.sources = [path.join(ext.base_dir, each) for each in ext.sources]
+            ext.sources = [os.path.join(ext.base_dir, each) for each in ext.sources]
 
         super().build_extension(ext)
 
         if isinstance(ext, CustomExtension):
             raw_output = self.get_ext_fullpath(ext.name)
 
-            filename = path.basename(raw_output)
-            pathname = path.dirname(raw_output)
+            filename = os.path.basename(raw_output)
+            pathname = os.path.dirname(raw_output)
 
-            output = path.join(pathname, ext.base_dir, filename)
+            output = os.path.join(pathname, ext.base_dir, filename)
 
             move(raw_output, output)
 
 
-custom_extension = CustomExtension(name='_core',
-                                   sources=['flow-network.cpp', 'py-api.cpp'],
-                                   base_dir='flow_network/core',
-                                   extra_compile_args=['-std=c++11'])
+if __name__ == '__main__':
+    custom_extension = CustomExtension(name='_core',
+                                       sources=['graph.cpp', 'base_network.cpp', 'maximum_flow.cpp',
+                                                'minimum_cost_flow.cpp', 'core_wrap.cxx'],
+                                       base_dir='flow_network/core',
+                                       extra_compile_args=['-std=c++11'])
 
-setup(
-    name=__title__,
-    version=__version__,
-    author=__author__,
-    author_email=__author_email__,
-    url=__url__,
-    description=__description__,
-    packages=find_packages(),
-    ext_modules=[custom_extension],
-    cmdclass={'build_ext': CustomBuild},
-    long_description=readme(),
-    long_description_content_type='text/markdown'
-)
+    setup(
+        name=__title__,
+        version=__version__,
+        author=__author__,
+        author_email=__author_email__,
+        url=__url__,
+        description=__description__,
+        packages=find_packages(),
+        ext_modules=[custom_extension],
+        cmdclass={'build_ext': CustomBuild},
+        long_description=readme(),
+        long_description_content_type='text/markdown'
+    )
