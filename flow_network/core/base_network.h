@@ -10,6 +10,8 @@ namespace flow_network {
         Graph graph;
 
         explicit BaseNetwork(int n);
+
+        ~BaseNetwork();
     };
 }
 

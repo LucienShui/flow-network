@@ -5,6 +5,10 @@ namespace flow_network {
 
     MaximumFlow::MaximumFlow(int n) : BaseNetwork(n), cur(new int[n]) {}
 
+    MaximumFlow::~MaximumFlow() {
+        delete[] cur;
+    }
+
     bool MaximumFlow::bfs(int S, int T) {
         memset(dist, 0xff, sizeof(int) * n);
         dist[S] = 0;

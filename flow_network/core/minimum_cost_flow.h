@@ -8,11 +8,13 @@ namespace flow_network {
     /**
      * 费用流
      */
-    struct MinimumCostFlow: BaseNetwork {
+    struct MinimumCostFlow : BaseNetwork {
 
         int *pre, *low, *vis, clk;
 
         explicit MinimumCostFlow(int n);
+
+        ~MinimumCostFlow();
 
         bool bfs(int S, int T);
 

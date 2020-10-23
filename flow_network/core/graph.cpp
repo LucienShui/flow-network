@@ -9,6 +9,10 @@ namespace flow_network {
         memset(head, 0xff, sizeof(int) * n);
     }
 
+    Graph::~Graph() {
+        delete[] head;
+    }
+
     void Graph::add_edge(int u, int v, int flow, int cost) {
         edges.emplace_back(head[u], u, v, flow, cost);
         head[u] = cnt++;
