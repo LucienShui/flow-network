@@ -8,6 +8,12 @@ namespace flow_network {
     MinimumCostFlow::MinimumCostFlow(int n) : BaseNetwork(n), pre(new int[n]), low(new int[n]),
                                               vis(new int[n]), clk(0) {}
 
+    MinimumCostFlow::~MinimumCostFlow() {
+        delete[] pre;
+        delete[] low;
+        delete[] vis;
+    }
+
     bool MinimumCostFlow::bfs(int S, int T) {
         vis[S] = ++clk, low[S] = INF, memset(dist, 0x3f, sizeof(int) * n), dist[S] = 0;
         std::queue<int> que;

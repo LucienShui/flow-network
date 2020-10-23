@@ -14,6 +14,7 @@ namespace flow_network {
         int next, u, v, flow, cost;
 
         Edge() = default;
+
         Edge(int next, int u, int v, int flow, int cost);
     };
 
@@ -26,6 +27,8 @@ namespace flow_network {
         std::vector<Edge> edges;
 
         explicit Graph(int n);
+
+        ~Graph();
 
         void add_edge(int u, int v, int flow, int cost = 0);
     };

@@ -8,11 +8,13 @@ namespace flow_network {
     /**
      * 最大流
      */
-    struct MaximumFlow: BaseNetwork {
+    struct MaximumFlow : BaseNetwork {
 
         int *cur;
 
         explicit MaximumFlow(int n);
+
+        ~MaximumFlow();
 
         bool bfs(int S, int T);
 

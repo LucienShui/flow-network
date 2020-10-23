@@ -4,6 +4,7 @@ try:
     from .core import BaseNetwork as CBaseNetwork
 except Exception as e:
     import sys
+
     """
     在调用 setup.py 的时候需要读取 flow_network.__version__
     于是 flow_network.__init__.py 会被同时调用，然后一直执行到这里
