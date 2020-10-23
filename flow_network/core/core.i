@@ -16,6 +16,7 @@
 %template(EdgeVector) std::vector<flow_network::Edge>;
 %template(IntVector) std::vector<int>;
 %template(IntIntPair) std::pair<int, int>;
+%template(LongLongPair) std::pair<long long, long long>;
 
 %include "common.h"
 %include "graph.h"
