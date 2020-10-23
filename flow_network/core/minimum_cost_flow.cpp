@@ -32,11 +32,11 @@ namespace flow_network {
         return dist[T] < INF;
     }
 
-    std::pair<int, int> MinimumCostFlow::run(int S, int T) {
-        int flow = 0, cost = 0;
+    std::pair<ll, ll> MinimumCostFlow::run(int S, int T) {
+        ll flow = 0, cost = 0;
         while (bfs(S, T)) {
             flow += low[T];
-            cost += low[T] * dist[T];
+            cost += 1ll * low[T] * dist[T];
             for (int u = T; u != S; u = graph.edges[pre[u]].u) {
                 graph.edges[pre[u]].flow -= low[T];
                 graph.edges[pre[u] ^ 1].flow += low[T];

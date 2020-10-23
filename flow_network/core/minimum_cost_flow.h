@@ -16,7 +16,7 @@ namespace flow_network {
 
         bool bfs(int S, int T);
 
-        std::pair<int, int> run(int S, int T);
+        std::pair<ll, ll> run(int S, int T);
     };
 }
 
