@@ -11,8 +11,12 @@ except Exception as e:
     但在调用 setup.py 的时候 core.i 还没被编译成 _core
     所以在这里 mock 一些 _core 里面的对象，否则会报错
     """
-    if 'setup.py' in sys.argv:
-        CMaximumFlow = CMinimumCostFlow = CBaseNetwork = None
-    else:
-        print(f'sys.argv = {sys.argv}')
+    setup: bool = False
+
+    for arg in sys.argv:
+        if arg.find('setup.py') != -1:
+            setup = True
+            CMaximumFlow = CMinimumCostFlow = CBaseNetwork = None
+
+    if not setup:
         raise e
