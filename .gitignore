@@ -172,3 +172,5 @@ flow_network/core/core.py
 # test
 graph.txt
 main.cpp
+out.txt
+wrong_graph.txt

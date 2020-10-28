@@ -1,15 +1,14 @@
 from __future__ import absolute_import, print_function
-from flow_network.util import index_validator
 from flow_network.core import CMinimumCostFlow
+from flow_network.python_backend import PyMinimumCostFlow
 from .network import NetWork
 import typing
 
 
 class MinimumCostFlow(NetWork):
 
-    def __init__(self, n: int):
-        super().__init__(n, 'minimum_cost_flow')
-        self._obj: CMinimumCostFlow = CMinimumCostFlow(n)
+    def __init__(self, n: int, backend: str = 'c'):
+        super().__init__(n, 'minimum_cost_flow', CMinimumCostFlow, PyMinimumCostFlow, backend)
         self.edges: typing.List[typing.Tuple[int, int, int, int]] = []
 
     def add_edge(self, u: int, v: int, flow: int, cost: int) -> None:
@@ -21,12 +20,9 @@ class MinimumCostFlow(NetWork):
         :param cost: cost for cutting an edge
         :return: None
         """
-        index_validator(u, v, self._n)
-
+        self._add_edge(u, v, flow, cost)
         self.edges.append((u, v, flow, cost))
         self.edges.append((v, u, 0, -cost))
-
-        self._obj.graph.add_edge(u, v, flow, cost)
 
     def run(self, s: int, t: int) -> (int, int):
         """
