@@ -11,6 +11,7 @@ namespace flow_network {
 
     Graph::~Graph() {
         delete[] head;
+        std::vector<Edge>().swap(edges);
     }
 
     void Graph::add_edge(int u, int v, int flow, int cost) {

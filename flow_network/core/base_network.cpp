@@ -1,10 +1,9 @@
 #include "base_network.h"
 
 namespace flow_network {
-    BaseNetwork::BaseNetwork(int n) : dist(new int[n]), n(n), graph(n) {}
+    BaseNetwork::BaseNetwork(int n) : n(n), dist(new int[n]), graph(n) {}
 
     BaseNetwork::~BaseNetwork() {
-        delete[] dist;
     }
 }
 
