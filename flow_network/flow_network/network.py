@@ -6,12 +6,17 @@ from flow_network.core import CBaseNetwork
 
 class NetWork:
 
-    def __init__(self, n: int, algorithm_name: str):
+    def __init__(self, n: int, algorithm_name: str, c_backend, python_backend=None, backend: str = 'c'):
         super().__init__()
 
         self._algorithm_name = algorithm_name
         self._n: int = n
-        self._obj: CBaseNetwork = ...
+
+        if backend.lower() == 'python' and python_backend is not None:
+            self._obj: CBaseNetwork = python_backend(n)
+        else:
+            self._obj: CBaseNetwork = c_backend(n)
+
         self.edges: typing.List[tuple] = ...
 
     def _run(self, s: int, t: int) -> [typing.Tuple, int]:
@@ -27,6 +32,20 @@ class NetWork:
             self.edges[idx] = tuple_modifier(self.edges[idx], 2, int(edge.flow))
 
         return result
+
+    def _add_edge(self, u: int, v: int, *args) -> None:
+
+        if len(args) > 2:
+            raise AssertionError('')
+
+        for node in ['u', 'v']:
+            if eval(node) < 0:
+                raise AssertionError(f'index of {node} is {eval(node)}, which should be greater or equal to 0')
+
+            if eval(node) >= self._n:
+                raise AssertionError(f'index of {node} is {eval(node)}, which should be less than n = {self._n}')
+
+        self._obj.graph.add_edge(u, v, *args)
 
     def summary(self, line_length: int = 32, print_fn=print):
         vertex_cnt: int = self._n

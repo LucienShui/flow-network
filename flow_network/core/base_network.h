@@ -3,10 +3,11 @@
 
 #include "graph.h"
 
+
 namespace flow_network {
 
     struct BaseNetwork {
-        int *dist, n;
+        int n, *dist;
         Graph graph;
 
         explicit BaseNetwork(int n);

@@ -1,13 +1,13 @@
 from __future__ import absolute_import, print_function
 import unittest
 
-from flow_network import FlowNetwork, MinimumCostFlow
+from flow_network import MaximumFlow, MinimumCostFlow
 
 
 class FlowNetworkTestCase(unittest.TestCase):
 
-    def test_flow_network(self):
-        flow_network = FlowNetwork(5)
+    def maximum_flow_test(self, backend: str = 'c'):
+        maximum_flow = MaximumFlow(5, backend)
 
         # u, v, flow
         edges = [
@@ -19,17 +19,17 @@ class FlowNetworkTestCase(unittest.TestCase):
         ]
 
         for u, v, flow in edges:
-            flow_network.add_edge(u, v, flow)
+            maximum_flow.add_edge(u, v, flow)
 
-        flow_network.summary()
+        maximum_flow.summary()
 
-        self.assertEqual(1, flow_network.run(0, 4))
+        self.assertEqual(1, maximum_flow.run(0, 4))
 
-        self.assertEqual(0, flow_network.edges[0][2])
-        self.assertEqual(1, flow_network.edges[1][2])
+        self.assertEqual(0, maximum_flow.edges[0][2])
+        self.assertEqual(1, maximum_flow.edges[1][2])
 
-    def test_minimum_cost_flow(self):
-        minimum_cost_flow = MinimumCostFlow(5)
+    def minimum_cost_flow_test(self, backend: str = 'c'):
+        minimum_cost_flow = MinimumCostFlow(5, backend)
 
         # u, v, flow, cost
         edges = [
@@ -53,6 +53,11 @@ class FlowNetworkTestCase(unittest.TestCase):
 
         self.assertEqual(0, minimum_cost_flow.edges[0][2])
         self.assertEqual(1, minimum_cost_flow.edges[1][2])
+
+    def test_flow_network(self):
+        for backend in ['c', 'python']:
+            self.maximum_flow_test(backend)
+            self.minimum_cost_flow_test(backend)
 
     def test_tuple_modifier(self):
         from flow_network.util import tuple_modifier

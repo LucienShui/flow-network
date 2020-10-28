@@ -1,14 +1,13 @@
 from __future__ import absolute_import, print_function
-from flow_network.util import index_validator
 from flow_network.core import CMaximumFlow
 from .network import NetWork
 import typing
 
 
-class FlowNetwork(NetWork):
+class MaximumFlow(NetWork):
 
-    def __init__(self, n: int):
-        super().__init__(n, 'flow_network')
+    def __init__(self, n: int, backend: str = 'c'):
+        super().__init__(n, 'flow_network', CMaximumFlow, None, backend)
         self.edges: typing.List[typing.Tuple[int, int, int]] = []
         self._obj: CMaximumFlow = CMaximumFlow(n)
 
@@ -20,12 +19,9 @@ class FlowNetwork(NetWork):
         :param flow: edge capacity
         :return: None
         """
-        index_validator(u, v, self._n)
-
+        self._add_edge(u, v, flow)
         self.edges.append((u, v, flow))
         self.edges.append((v, u, 0))
-
-        self._obj.graph.add_edge(u, v, flow)
 
     def run(self, s: int, t: int) -> int:
         """
