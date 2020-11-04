@@ -35,8 +35,12 @@ class NetWork:
 
     def _add_edge(self, u: int, v: int, *args) -> None:
 
-        if len(args) > 2:
-            raise AssertionError('')
+        if not 1 <= len(args) <= 2:
+            raise AssertionError('length of args must >= 1 and <= 2')
+
+        for arg in (u, v) + args:
+            if not isinstance(arg, int):
+                raise AssertionError(f'every arg should be type of int, got {type(arg)}')
 
         for node in ['u', 'v']:
             if eval(node) < 0:
