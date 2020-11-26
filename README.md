@@ -30,7 +30,7 @@ mf.add_edge(0, 1, 3)  # 添加一条从 0 指向 1 的边，流量为 3
 result = mf.run(0, 1)  # 指定源点为 0，汇点为 1，跑最大流 & 最小割
 print(result)  # 3
 
-mcf = MinimumCostFlow(2)  # 创建一个包含 2 个点的费用流对象，下标从 1 开始
+mcf = MinimumCostFlow(2)  # 创建一个包含 2 个点的费用流对象，下标从 0 开始
 mcf.add_edge(0, 1, 3, 2)  # 添加一条从 0 指向 1 的边，流量为 3，单位流量的费用为 2
 flow, cost = mcf.run(0, 1)  # 指定源点为 0，汇点为 1，跑最大流 & 最小费
 print(flow, cost)  # 3 6
