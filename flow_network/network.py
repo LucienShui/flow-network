@@ -65,6 +65,14 @@ Number of vertices: {vertex_cnt}
 Number of edges: {edge_cnt}
 {"=" * line_length}''')
 
+    def extract_graph(self, print_fn=print):
+        print_fn('\n'.join(
+            [
+                'u -> v, flow / capacity' + ', cost' if isinstance(self.edges[0], EdgeWithCost) else ''
+            ] + [
+                str(edge) for edge in self.edges
+            ]))
+
 
 class MaximumFlow(NetWork):
 

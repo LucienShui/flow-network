@@ -1,7 +1,7 @@
 from __future__ import absolute_import, print_function
 import unittest
 
-from flow_network import MaximumFlow, MinimumCostFlow
+from .network import MaximumFlow, MinimumCostFlow
 
 
 class FlowNetworkTestCase(unittest.TestCase):
@@ -25,6 +25,8 @@ class FlowNetworkTestCase(unittest.TestCase):
 
         self.assertEqual(1, maximum_flow.run(0, 4))
 
+        maximum_flow.extract_graph()
+
         expected_flow = [1, 0, 0, 1, 1]
 
         self.assertEqual(expected_flow, [edge.flow for edge in maximum_flow.edges])
@@ -47,6 +49,8 @@ class FlowNetworkTestCase(unittest.TestCase):
         minimum_cost_flow.summary()
 
         flow, cost = minimum_cost_flow.run(0, 4)
+
+        minimum_cost_flow.extract_graph()
 
         self.assertEqual(1, flow)
         self.assertEqual(4, cost)
