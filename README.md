@@ -26,19 +26,25 @@ pip install flow-network
 from flow_network import MaximumFlow, MinimumCostFlow
 
 mf = MaximumFlow(2)  # 创建一个包含 2 个点的网络流对象，下标从 0 开始
-mf.add_edge(0, 1, 3)  # 添加一条从 0 指向 1 的边，流量为 3
+mf.add_edge(0, 1, 3)  # 添加一条从 0 指向 1 的边，容量为 3
 result = mf.run(0, 1)  # 指定源点为 0，汇点为 1，跑最大流 & 最小割
 print(result)  # 3
 
+for edge in mf.edges:  # 遍历每条边
+    print(edge.u, edge.v, edge.flow, edge.capacity)  # 边的起点、终点、流过的流量、最大容量
+
 mcf = MinimumCostFlow(2)  # 创建一个包含 2 个点的费用流对象，下标从 0 开始
-mcf.add_edge(0, 1, 3, 2)  # 添加一条从 0 指向 1 的边，流量为 3，单位流量的费用为 2
+mcf.add_edge(0, 1, 3, 2)  # 添加一条从 0 指向 1 的边，容量为 3，单位流量的费用为 2
 flow, cost = mcf.run(0, 1)  # 指定源点为 0，汇点为 1，跑最大流 & 最小费
 print(flow, cost)  # 3 6
+
+for edge in mcf.edges:
+    print(edge.u, edge.v, edge.flow, edge.capacity, edge.cost)  # 边的起点、终点、流过的流量、最大容量、单位流量的费用
 ```
 
 ### 测试代码
 
-[tests.py](https://github.com/LucienShui/flow-network/blob/main/tests.py)
+[tests.py](./flow_network/tests.py)
 
 ## Reference
 
